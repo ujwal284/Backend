@@ -36,6 +36,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
 const registerUser = asyncHandler(async (req, res) => {
     const { fullName, email, username, password } = req.body;
 
+
     if ([fullName, email, username, password].some((field) => !field?.trim())) {
         throw new ApiError(400, "All fields are required");
     }
@@ -82,7 +83,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body;
-    // console.log(email, username, password)
+    // console.log(email,
+    //     username,
+    //     password)
 
     if (!username && !email) {
         throw new ApiError(400, "Username or email is required");
@@ -154,7 +157,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken
 
-    if (incomingRefreshToken) {
+    if (!incomingRefreshToken) {
         throw new ApiError(401, "unauthorized request")
     }
 
