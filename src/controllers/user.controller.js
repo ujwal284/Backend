@@ -6,6 +6,7 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import mongoose from 'mongoose';
 
+
 const generateAccessAndRefreshTokens = async (userId) => {
     try {
         const user = await User.findById(userId);
@@ -25,7 +26,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
             { expiresIn: '7d' }
         );
 
-        user.refreshToken = refreshToken;
+        user.refreshToken = refreshToken
         await user.save({ validateBeforeSave: false });
 
         return { accessToken, refreshToken };
@@ -167,7 +168,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
-    const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken
+    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
     if (!incomingRefreshToken) {
         throw new ApiError(401, "unauthorized request")
