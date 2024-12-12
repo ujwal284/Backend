@@ -25,7 +25,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
             { expiresIn: '7d' }
         );
 
-        user.refreshToken = refreshToken;
+        user.refreshToken = refreshToken
         await user.save({ validateBeforeSave: false });
 
         return { accessToken, refreshToken };
